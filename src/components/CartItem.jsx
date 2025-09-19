@@ -3,6 +3,7 @@ import ProductCard from './ProductCard'   // import your product card
 
 const ProductList = (props) => {
   const data = props.data
+console.log(data);
 
   // Example: filter and sort products
   const filterSort = data

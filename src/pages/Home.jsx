@@ -13,6 +13,7 @@ const Home = () => {
 
   const products = [
     {
+      category:"top_selling",
       id: 1,
       name: "Nike Air Sneakers",
       price: 120,
@@ -20,6 +21,7 @@ const Home = () => {
       img: "./assets/shoe3.jpg",
     },
     {
+       category:"top_selling",
       id: 2,
       name: "Adidas Running Shoes",
       price: 95,
@@ -27,6 +29,7 @@ const Home = () => {
       img: "./assets/shoe3.jpg",
     },
     {
+       category:"new_arrival",
       id: 3,
       name: "Puma Sports Shoes",
       price: 110,
@@ -34,13 +37,14 @@ const Home = () => {
       img: "./assets/shoe3.jpg",
     },
     {
+       category:"new_arrival",
       id: 4,
       name: "Reebok Classic",
       price: 130,
       rating: 4.8,
       img: "./assets/shoe4.jpg",
     },
-    {
+    { category:"new_arrival",
       id: 5,
       name: "Converse All Star",
       price: 85,
@@ -48,6 +52,9 @@ const Home = () => {
       img: "./assets/shoe5.jpg",
     },
   ];
+console.log(products);
+
+
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center px-0">
@@ -125,9 +132,12 @@ const Home = () => {
   </div>
 <div className="App p-6">
       <h1 className="text-2xl font-bold mb-6 text-center">🛒 Product Store</h1>
-      <ProductList data={products} />
+      <ProductList data={products.filter((item)=>item.category==="top_selling")} />
     </div>
-
+<div className="App p-6">
+      <h1 className="text-2xl font-bold mb-6 text-center">🛒 Product Store</h1>
+      <ProductList data={products.filter((item)=>item.category==="new_arrival")} />
+    </div>
 </div>
 
   );
