@@ -8,6 +8,7 @@ import prada from "../assets/images/prada-logo-1 1.png";
 import gucci from "../assets/images/gucci-logo-1 1.png";
 import calvinklein from "../assets/images/Group (1).png";
 import ProductList from "../components/CartItem";
+import TestimonialsSlider from "../components/Testimonial";
 
 const Home = () => {
   const dressStyles = [
@@ -155,8 +156,6 @@ const Home = () => {
         />
       </div>
       <div class="max-w-[1000px] mx-auto my-10 text-center font-sans">
-        <h2 class="text-[20px] font-extrabold mb-5">BROWSE BY DRESS STYLE</h2>
-
         <div className="w-full max-w-6xl py-8">
           <h2 className="text-2xl font-bold text-center mb-8">
             BROWSE BY DRESS STYLE
@@ -180,6 +179,7 @@ const Home = () => {
           </div>
         </div>
       </div>
+      <TestimonialsSlider/>
     </div>
   );
 };

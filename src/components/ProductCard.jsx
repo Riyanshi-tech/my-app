@@ -28,7 +28,6 @@ const ProductCard= (props) => {
       <div className="product-price text-green-600 font-semibold text-xl">
         ${props.price}
       </div>
-
       <Button title={"Shop Now"} dark={false} />
     </div>
   );
