@@ -64,7 +64,7 @@ const CategoryPage = () => {
         <div className="mb-4">
           <label className="block font-medium mb-2">Color</label>
           <select
-            value={filters.color}
+            value= {filters.category}
             onChange={(e) => handleFilterChange("color", e.target.value)}
             className="w-full border rounded p-2"
           >

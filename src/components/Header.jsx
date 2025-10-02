@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ChevronDown, Menu, X, ShoppingCart, User } from "lucide-react";
+import { ChevronDown,ChevronUp, Menu, X, ShoppingCart, User } from "lucide-react";
 
 const Header = () => {
   const [isMenuOpen, setMenuOpen] = useState(false); // Mobile menu
@@ -30,11 +30,10 @@ const Header = () => {
           {/* Shop with Dropdown */}
           <div
             className="relative"
-            onMouseEnter={() => setDropdownOpen(true)}
-            onMouseLeave={() => setDropdownOpen(false)}
+            onClick={() => setDropdownOpen(!isDropdownOpen)}
           >
             <button className="flex items-center gap-1 hover:text-blue-600">
-              Shop <ChevronDown size={16} />
+              Shop {isDropdownOpen?<ChevronUp size={16} />:<ChevronDown size={16} />}
             </button>
             {isDropdownOpen && (
               <div className="absolute top-full left-0 mt-2 w-40 bg-white shadow-lg rounded-md z-50">
@@ -50,7 +49,10 @@ const Header = () => {
                 >
                   Category
                 </a>
-                <a href="/checkout" className="block px-4 py-2 hover:bg-gray-100">
+                <a
+                  href="/checkout"
+                  className="block px-4 py-2 hover:bg-gray-100"
+                >
                   Checkout
                 </a>
                 <a
@@ -115,7 +117,10 @@ const Header = () => {
               <a href="/cart" className="py-1 hover:text-blue-600">
                 Cart
               </a>
-              <a href="/category/electronics" className="py-1 hover:text-blue-600">
+              <a
+                href="/category/electronics"
+                className="py-1 hover:text-blue-600"
+              >
                 Category
               </a>
               <a href="/checkout" className="py-1 hover:text-blue-600">
