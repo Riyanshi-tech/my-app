@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import products from "../data/products"; // ✅ import shared data
+import React, { useState, useEffect } from "react";
+import { getProducts } from "../data/products"; // Axios fetch function
 
 const CategoryPage = () => {
   const [filters, setFilters] = useState({
@@ -8,6 +8,35 @@ const CategoryPage = () => {
     color: "",
     maxPrice: 200,
   });
+
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  // Fetch products from API once component mounts
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      const data = await getProducts();
+
+      // Optional: add size/color for filters if API doesn't provide
+      const enriched = data.map((p) => ({
+        ...p,
+        size: ["S", "M", "L", "XL"][Math.floor(Math.random() * 4)],
+        color: ["Black", "White", "Red", "Gray", "Blue"][
+          Math.floor(Math.random() * 5)
+        ],
+        name: p.title || p.name,
+        img: p.image || p.img,
+        price: p.price,
+        category: p.category,
+      }));
+
+      setProducts(enriched);
+      setLoading(false);
+    };
+
+    fetchData();
+  }, []);
 
   const handleFilterChange = (key, value) => {
     setFilters((prev) => ({ ...prev, [key]: value }));
@@ -21,6 +50,10 @@ const CategoryPage = () => {
       p.price <= filters.maxPrice
     );
   });
+
+  if (loading) {
+    return <p className="text-center mt-10">Loading products...</p>;
+  }
 
   return (
     <div className="flex gap-6 max-w-7xl mx-auto px-4 py-8">
@@ -37,10 +70,10 @@ const CategoryPage = () => {
             className="w-full border rounded p-2"
           >
             <option value="">All</option>
-            <option value="Casual">Casual</option>
-            <option value="Formal">Formal</option>
-            <option value="Party">Party</option>
-            <option value="Gym">Gym</option>
+            <option value="men's clothing">Men</option>
+            <option value="women's clothing">Women</option>
+            <option value="jewelery">Jewelery</option>
+            <option value="electronics">Electronics</option>
           </select>
         </div>
 
@@ -64,7 +97,7 @@ const CategoryPage = () => {
         <div className="mb-4">
           <label className="block font-medium mb-2">Color</label>
           <select
-            value= {filters.category}
+            value={filters.color} // ✅ fixed
             onChange={(e) => handleFilterChange("color", e.target.value)}
             className="w-full border rounded p-2"
           >
