@@ -10,13 +10,15 @@ const CategoryPage = () => {
   });
 
   const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   // Fetch products from API once component mounts
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
+
       const data = await getProducts();
+      console.log(data);
 
       // Optional: add size/color for filters if API doesn't provide
       const enriched = data.map((p) => ({
@@ -34,7 +36,6 @@ const CategoryPage = () => {
       setProducts(enriched);
       setLoading(false);
     };
-
     fetchData();
   }, []);
 

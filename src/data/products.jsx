@@ -56,8 +56,7 @@
 // src/data/products.js
 import axios from "axios";
 
-const API_URL =
-  "https://taobao-api.p.rapidapi.com/api?api=item_search&page_size=40&sort=default&q=shoes";
+const API_URL = "https://fakestoreapi.com/products";
 
 export const getProducts = async () => {
   try {
