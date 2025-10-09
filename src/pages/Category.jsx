@@ -139,7 +139,7 @@ const CategoryPage = () => {
               className="border rounded-lg p-4 shadow hover:shadow-lg transition"
             >
               <img
-                src={p.img}
+                src={p.img} 
                 alt={p.name}
                 className="w-full h-48 object-cover rounded"
               />
