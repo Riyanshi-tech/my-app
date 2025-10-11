@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { getProducts } from "../data/products"; // Axios fetch function
+import { getProducts } from "../data/products";
+import { Link, useNavigate } from "react-router-dom";
+import { useCart } from "../components/cartContext"; // ✅ import cart hook
 
 const CategoryPage = () => {
+  const navigate = useNavigate();
+  const { addToCart } = useCart(); // ✅ get addToCart function
+
   const [filters, setFilters] = useState({
     category: "",
     size: "",
@@ -12,15 +17,12 @@ const CategoryPage = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  // Fetch products from API once component mounts
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
 
       const data = await getProducts();
-      console.log(data);
 
-      // Optional: add size/color for filters if API doesn't provide
       const enriched = data.map((p) => ({
         ...p,
         size: ["S", "M", "L", "XL"][Math.floor(Math.random() * 4)],
@@ -98,7 +100,7 @@ const CategoryPage = () => {
         <div className="mb-4">
           <label className="block font-medium mb-2">Color</label>
           <select
-            value={filters.color} // ✅ fixed
+            value={filters.color}
             onChange={(e) => handleFilterChange("color", e.target.value)}
             className="w-full border rounded p-2"
           >
@@ -138,14 +140,25 @@ const CategoryPage = () => {
               key={p.id}
               className="border rounded-lg p-4 shadow hover:shadow-lg transition"
             >
-              <img
-                src={p.img} 
-                alt={p.name}
-                className="w-full h-48 object-cover rounded"
-              />
-              <h3 className="font-semibold mt-2">{p.name}</h3>
-              <p className="text-gray-600">${p.price}</p>
-              <button className="mt-2 w-full bg-black text-white py-2 rounded">
+              {/* Link wraps image, name, and price */}
+              <Link to={`/product/${p.id}`}>
+                <img
+                  src={p.img}
+                  alt={p.name}
+                  className="w-full h-48 object-cover rounded"
+                />
+                <h3 className="font-semibold mt-2">{p.name}</h3>
+                <p className="text-gray-600">${p.price}</p>
+              </Link>
+
+              {/* Add to Cart button */}
+              <button
+                className="mt-2 w-full bg-black text-white py-2 rounded"
+                onClick={() => {
+                  addToCart(p); // ✅ add product to cart
+                  navigate("/cart"); // ✅ go to cart page
+                }}
+              >
                 Add to Cart
               </button>
             </div>

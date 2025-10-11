@@ -1,34 +1,29 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState } from "react"; // ✅ make sure useContext is imported
 
 const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState([]);
 
-  // 🛒 Add item or increase quantity
   const addToCart = (product) => {
     setCartItems((prev) => {
       const existing = prev.find((item) => item.id === product.id);
       if (existing) {
-        // increase quantity if already in cart
         return prev.map((item) =>
           item.id === product.id
             ? { ...item, quantity: item.quantity + 1 }
             : item
         );
       } else {
-        // add new item
         return [...prev, { ...product, quantity: 1 }];
       }
     });
   };
 
-  // Remove from cart
   const removeFromCart = (id) => {
     setCartItems((prev) => prev.filter((item) => item.id !== id));
   };
 
-  // Clear all
   const clearCart = () => setCartItems([]);
 
   return (
@@ -40,5 +35,5 @@ export const CartProvider = ({ children }) => {
   );
 };
 
-// Custom hook to use anywhere
-export const Cart = () => useContext(CartContext);
+// ✅ This is the correct hook syntax
+export const useCart = () => useContext(CartContext);
