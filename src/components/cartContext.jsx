@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from "react"; // ✅ make sure useContext is imported
+import React, { createContext, useContext, useState } from "react";
 
 const CartContext = createContext();
 
@@ -27,13 +27,10 @@ export const CartProvider = ({ children }) => {
   const clearCart = () => setCartItems([]);
 
   return (
-    <CartContext.Provider
-      value={{ cartItems, addToCart, removeFromCart, clearCart }}
-    >
+    <CartContext.Provider value={{ cartItems, addToCart, removeFromCart, clearCart }}>
       {children}
     </CartContext.Provider>
   );
 };
 
-// ✅ This is the correct hook syntax
 export const useCart = () => useContext(CartContext);

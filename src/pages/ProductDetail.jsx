@@ -52,16 +52,16 @@
 // export default ProductDetail;
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { getProducts } from "../data/products"; // your Axios fetch function
+import { getProducts } from "../data/products"; 
 import { AiOutlineArrowLeft } from "react-icons/ai";
-import { useCart } from "../components/cartContext"; // ✅ import hook
+import {useCart} from "../components/cartContext";
 
 const ProductDetail = () => {
-  const { id } = useParams(); // get product ID from URL
+  const { id } = useParams(); 
   const navigate = useNavigate();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
-  const { addToCart } = useCart(); // ✅ get addToCart function
+  const { addToCart } = useCart(); 
 
   // Fetch the product details on component mount
   useEffect(() => {
@@ -86,8 +86,8 @@ const ProductDetail = () => {
     return <p className="text-center mt-10 text-red-500">Product not found.</p>;
 
   const handleAddToCart = () => {
-    addToCart(product); // ✅ add product to cart
-    navigate("/cart"); // ✅ optional: go to cart page immediately
+    addToCart(product); 
+    navigate("/cart"); 
   };
 
   return (
@@ -117,7 +117,7 @@ const ProductDetail = () => {
           <p className="text-2xl font-semibold mb-6">${product.price}</p>
 
           <button
-            onClick={handleAddToCart} // ✅ connect button
+            onClick={handleAddToCart} 
             className="bg-black text-white px-6 py-3 rounded hover:bg-gray-800"
           >
             Add to Cart

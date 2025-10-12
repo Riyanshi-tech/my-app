@@ -1,44 +1,45 @@
-import React, { createContext, useContext, useState } from "react";
+import { useCart } from "../components/cartContext";
 
-const CartContext = createContext();
-
-export const CartProvider = ({ children }) => {
-  const [cartItems, setCartItems] = useState([]);
-
-  // 🛒 Add item or increase quantity
-  const addToCart = (product) => {
-    setCartItems((prev) => {
-      const existing = prev.find((item) => item.id === product.id);
-      if (existing) {
-        // increase quantity if already in cart
-        return prev.map((item) =>
-          item.id === product.id
-            ? { ...item, quantity: item.quantity + 1 }
-            : item
-        );
-      } else {
-        // add new item
-        return [...prev, { ...product, quantity: 1 }];
-      }
-    });
-  };
-
-  // Remove from cart
-  const removeFromCart = (id) => {
-    setCartItems((prev) => prev.filter((item) => item.id !== id));
-  };
-
-  // Clear all
-  const clearCart = () => setCartItems([]);
+const Cart = () => {
+  const { cartItems, removeFromCart, clearCart } = useCart();
 
   return (
-    <CartContext.Provider
-      value={{ cartItems, addToCart, removeFromCart, clearCart }}
-    >
-      {children}
-    </CartContext.Provider>
+    <div className="max-w-4xl mx-auto p-6">
+      <h1 className="text-3xl font-bold mb-4">Your Cart</h1>
+
+      {cartItems.length === 0 ? (
+        <p>Your cart is empty.</p>
+      ) : (
+        <>
+          {cartItems.map((item) => (
+            <div
+              key={item.id}
+              className="flex justify-between items-center mb-4"
+            >
+              <div>
+                <p className="font-semibold">{item.title}</p>
+                <p>Quantity: {item.quantity}</p>
+                <p>Price: ${item.price}</p>
+              </div>
+              <button
+                onClick={() => removeFromCart(item.id)}
+                className="bg-red-500 text-white px-3 py-1 rounded"
+              >
+                Remove
+              </button>
+            </div>
+          ))}
+
+          <button
+            onClick={clearCart}
+            className="bg-gray-800 text-white px-6 py-2 rounded mt-4"
+          >
+            Clear Cart
+          </button>
+        </>
+      )}
+    </div>
   );
 };
 
-// Custom hook to use anywhere
-export const Cart = () => useContext(CartContext);
+export default Cart;

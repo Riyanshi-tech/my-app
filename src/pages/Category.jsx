@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { getProducts } from "../data/products";
 import { Link, useNavigate } from "react-router-dom";
-import { useCart } from "../components/cartContext"; // ✅ import cart hook
+import { useCart } from "../components/cartContext";
 
 const CategoryPage = () => {
   const navigate = useNavigate();
-  const { addToCart } = useCart(); // ✅ get addToCart function
+  const { addToCart } = useCart(); 
 
   const [filters, setFilters] = useState({
     category: "",
