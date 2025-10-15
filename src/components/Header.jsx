@@ -6,16 +6,33 @@ import {
   X,
   ShoppingCart,
   User,
+  Search,
 } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const Header = () => {
   const [isMenuOpen, setMenuOpen] = useState(false);
   const [isDropdownOpen, setDropdownOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+
+  // Mock product data (you can replace with API or context)
+  const products = [
+    { id: 1, name: "Classic White T-Shirt" },
+    { id: 2, name: "Black Denim Jacket" },
+    { id: 3, name: "Cotton Hoodie" },
+    { id: 4, name: "Slim Fit Jeans" },
+    { id: 5, name: "Leather Jacket" },
+  ];
+
+  // Filter products by search
+  const filteredProducts = products.filter((item) =>
+    item.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
     <header className="bg-white shadow-md px-6 py-4 relative">
       <div className="flex items-center justify-between">
+        {/* Left Section */}
         <div className="flex items-center gap-3">
           <button
             className="md:hidden focus:outline-none"
@@ -28,6 +45,7 @@ const Header = () => {
           </div>
         </div>
 
+        {/* Center Navigation */}
         <nav className="hidden md:flex gap-8 text-gray-700 font-medium relative">
           <div
             className="relative"
@@ -71,7 +89,6 @@ const Header = () => {
             )}
           </div>
 
-          {/* Hash links for Home sections */}
           <Link to="/#top_selling" className="hover:text-blue-600">
             On Sale
           </Link>
@@ -83,44 +100,59 @@ const Header = () => {
           </Link>
         </nav>
 
-        <div className="flex items-center gap-4">
+        {/* Right Section - Search, Cart, Profile */}
+        <div className="flex items-center gap-4 relative">
+          {/* Search Bar */}
+          <div className="relative">
+            <div className="flex items-center border border-gray-300 rounded-full px-3 py-1 bg-gray-50 focus-within:ring-2 focus-within:ring-blue-400">
+              <Search size={18} className="text-gray-500 mr-2" />
+              <input
+                type="text"
+                placeholder="Search for products..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="bg-transparent outline-none w-48 md:w-64 text-sm"
+              />
+            </div>
+
+            {/* Search Suggestions */}
+            {searchTerm && (
+              <div className="absolute top-full left-0 mt-2 w-full bg-white border border-gray-200 rounded-lg shadow-lg z-50 max-h-60 overflow-y-auto">
+                {filteredProducts.length > 0 ? (
+                  filteredProducts.map((item) => (
+                    <Link
+                      key={item.id}
+                      to={`/product/${item.id}`}
+                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      onClick={() => setSearchTerm("")}
+                    >
+                      {item.name}
+                    </Link>
+                  ))
+                ) : (
+                  <p className="px-4 py-2 text-sm text-gray-500">
+                    No results found
+                  </p>
+                )}
+              </div>
+            )}
+          </div>
+
+          {/* Icons */}
           <ShoppingCart size={24} className="text-gray-700 cursor-pointer" />
           <User size={24} className="text-gray-700 cursor-pointer" />
         </div>
       </div>
 
+      {/* Mobile Dropdown */}
       {isMenuOpen && (
         <div className="md:hidden mt-4 flex flex-col gap-2 text-gray-700">
-          <button
-            onClick={() => setDropdownOpen(!isDropdownOpen)}
-            className="flex items-center justify-between px-4 py-2 w-full bg-gray-100 rounded-md"
-          >
-            Shop <ChevronDown size={16} />
-          </button>
-
-          {isDropdownOpen && (
-            <div className="flex flex-col pl-4">
-              <Link to="/" className="py-1 hover:text-blue-600">
-                Home
-              </Link>
-              <Link to="/cart" className="py-1 hover:text-blue-600">
-                Cart
-              </Link>
-              <Link
-                to="/category/electronics"
-                className="py-1 hover:text-blue-600"
-              >
-                Category
-              </Link>
-              <Link to="/checkout" className="py-1 hover:text-blue-600">
-                Checkout
-              </Link>
-              <Link to="/product/1" className="py-1 hover:text-blue-600">
-                Product Detail
-              </Link>
-            </div>
-          )}
-
+          <Link to="/" className="px-4 py-2 hover:text-blue-600">
+            Home
+          </Link>
+          <Link to="/cart" className="px-4 py-2 hover:text-blue-600">
+            Cart
+          </Link>
           <Link to="/#top_selling" className="px-4 py-2 hover:text-blue-600">
             On Sale
           </Link>
