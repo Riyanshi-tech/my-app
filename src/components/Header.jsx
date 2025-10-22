@@ -14,8 +14,6 @@ const Header = () => {
   const [isMenuOpen, setMenuOpen] = useState(false);
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-
-  // Mock product data (you can replace with API or context)
   const products = [
     { id: 1, name: "Classic White T-Shirt" },
     { id: 2, name: "Black Denim Jacket" },
@@ -23,8 +21,6 @@ const Header = () => {
     { id: 4, name: "Slim Fit Jeans" },
     { id: 5, name: "Leather Jacket" },
   ];
-
-  // Filter products by search
   const filteredProducts = products.filter((item) =>
     item.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
